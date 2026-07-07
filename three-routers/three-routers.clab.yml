@@ -1,0 +1,23 @@
+name: three-routers
+mgmt:
+  network: fixedips
+  ipv4-subnet: 10.200.255.0/24
+
+topology:
+  kinds:
+    juniper_vjunosrouter:
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+  nodes:
+    R1:
+      kind: juniper_vjunosrouter
+      mgmt-ipv4: 10.200.255.2
+    R2:
+      kind: juniper_vjunosrouter
+      mgmt-ipv4: 10.200.255.3
+    R3:
+      kind: juniper_vjunosrouter
+      mgmt-ipv4: 10.200.255.4
+
+  links:
+    - endpoints: ["R1:ge-0/0/0", "R2:ge-0/0/0"]
+    - endpoints: ["R2:ge-0/0/1", "R3:ge-0/0/0"]
