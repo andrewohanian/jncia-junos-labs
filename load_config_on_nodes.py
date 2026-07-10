@@ -8,6 +8,7 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 import socket
 import subprocess
 from concurrent.futures import ThreadPoolExecutor
+import argparse
 
 
 def get_server_ip():
@@ -64,8 +65,13 @@ server_ip = get_server_ip()
 server_thread = threading.Thread(target=start_http_server, daemon=True)
 server_thread.start()
 
-user_directory = input('Enter the lab directory (ex. three-routers): ')
-config_filename = input('Enter configuration filename (ex. basic.addressing.cfg): ')
+parser = argparse.ArgumentParser(description="Python script to load configuration onto clab nodes")
+parser.add_argument('--lab_dir', type=str, required=True, help='Directory for clab topology (ex. three-routers)')
+parser.add_argument('--config_filename', type=str, required=True, help='Configuration filename to load (ex. basic.addressing.cfg)')
+args = parser.parse_args()
+user_directory = args.lab_dir
+config_filename = args.config_filename
+
 for filename in os.listdir(user_directory):
     if filename.endswith('clab.yml'):
         topology_file = os.path.join(user_directory, filename)
