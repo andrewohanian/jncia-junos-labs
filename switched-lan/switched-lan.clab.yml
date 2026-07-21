@@ -1,0 +1,38 @@
+name: switched-lan
+mgmt:
+  network: fixedips
+  ipv4-subnet: 10.200.255.0/24
+
+topology:
+  kinds:
+    juniper_vjunosrouter:
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+    juniper_vjunosswitch:
+      image: vrnetlab/juniper_vjunos-switch:25.4R1.12
+  nodes:
+    R1:
+      kind: juniper_vjunosrouter
+      mgmt-ipv4: 10.200.255.2
+    SW1:
+      kind: juniper_vjunosswitch
+      mgmt-ipv4: 10.200.255.3
+    SW2:
+      kind: juniper_vjunosswitch
+      mgmt-ipv4: 10.200.255.4
+    SW3:
+      kind: juniper_vjunosswitch
+      mgmt-ipv4: 10.200.255.5
+    HOST-RTR:
+      kind: juniper_vjunosrouter
+      mgmt-ipv4: 10.200.255.6
+
+  links:
+    - endpoints: ["R1:ge-0/0/0", "SW1:ge-0/0/0"]
+    - endpoints: ["R1:ge-0/0/1", "SW1:ge-0/0/1"]
+    - endpoints: ["SW2:ge-0/0/0", "SW1:ge-0/0/2"]
+    - endpoints: ["SW3:ge-0/0/0", "SW1:ge-0/0/3"]
+    - endpoints: ["SW2:ge-0/0/1", "SW3:ge-0/0/1"]
+    - endpoints: ["HOST-RTR:ge-0/0/0", "SW2:ge-0/0/2"]
+    - endpoints: ["HOST-RTR:ge-0/0/1", "SW2:ge-0/0/3"]
+    - endpoints: ["HOST-RTR:ge-0/0/2", "SW3:ge-0/0/2"]
+    - endpoints: ["HOST-RTR:ge-0/0/3", "SW3:ge-0/0/3"]
