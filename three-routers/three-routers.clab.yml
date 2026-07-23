@@ -21,3 +21,4 @@ topology:
   links:
     - endpoints: ["R1:ge-0/0/0", "R2:ge-0/0/0"]
     - endpoints: ["R2:ge-0/0/1", "R3:ge-0/0/0"]
+    - endpoints: ["R1:ge-0/0/3", "R2:ge-0/0/3"]
