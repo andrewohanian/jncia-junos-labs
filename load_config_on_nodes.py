@@ -33,7 +33,7 @@ def start_http_server():
 
 
 def load_config(node):
-    if node['kind'] == 'juniper_vjunosrouter':
+    if node['kind'] == 'juniper_vjunosrouter' or node['kind'] == 'juniper_vjunosswitch':
         router = {
             'device_type': 'juniper_junos',
             'ip': node['mgmt-ipv4'],
